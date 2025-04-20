@@ -66,26 +66,33 @@ function populateQueue(profile) {
 function populateTable(profile) {
   let table = document.getElementById("tableBody");
   for (let i = 0; i < profile.queue.length; i++) {
-    var song = profile.queue[i];
-    var songName = song.name;
-    var type = song.type;
-    var person = "undefined";
+    var song;
+    var songName = "local";
+    var type = "local";
+    var person = "itsanimepotato";
     var songOfSM = false;
 
-    if (type === "episode") {
-      person = song.show.publisher;
-    } else {
-      var artistNames = song.artists.map((artist) => artist.name).join(", ");
-      person = artistNames;
-      songOfSM = smSong(song);
+    if (profile.queue[i].is_local === false) {
+      song = profile.queue[i];
+      songName = song.name;
+      type = song.type;
+      person = "undefined";
+
+      if (type === "episode") {
+        person = song.show.publisher;
+      } else {
+        var artistNames = song.artists.map((artist) => artist.name).join(", ");
+        person = artistNames;
+        songOfSM = smSong(song);
+      }
     }
 
     let row = `<tr>
-      <td>${i + 1}</td>
+      <td class="numSong">${i + 1}</td>
       <td>${songName}</td>
       <td>${person}</td>
-      <td>${songOfSM}</td>
-      <td>${type}</td>
+      <td class="smType">${songOfSM}</td>
+      <td class="songType">${type}</td>
     </tr>`;
     table.innerHTML += row;
   }
