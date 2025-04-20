@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SM Skipper</title>
+    <script src="src/script.js" type="module"></script>
+    <style>
+      table {
+        width: 100%;
+        max-width: 500px;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+      }
+      th,
+      td {
+        border: 1px solid #444;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f0f0f0;
+      }
+      input {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Display your Spotify profile data</h1>
+
+    <section id="profile">
+      <h2>Logged in as <span id="displayName"></span></h2>
+      <span id="avatar"></span>
+      <ul>
+        <li>User ID: <span id="id"></span></li>
+        <li>Email: <span id="email"></span></li>
+        <li>Spotify URI: <a id="uri" href="#"></a></li>
+        <li>Link: <a id="url" href="#"></a></li>
+        <li>Profile Image: <span id="imgUrl"></span></li>
+      </ul>
+    </section>
+
+    <section id="queue">
+      <h2>Song Queue</h2>
+      <p>These are the stats of the queue:</p>
+      <ul>
+        <li>Current Song: <span id="currentSong"></span></li>
+        <li>Queue Length: <span id="fullQueueLength"></span></li>
+        <li>Next Song: <span id="nextSong"></span></li>
+      </ul>
+
+      <table class="table">
+        <tr class="bg-info">
+          <th>#</span></th>
+          <th>Songs</th>
+          <th>Artists</th>
+          <th>SM?</th>
+        </tr>
+
+        <tbody id="tableBody"></tbody>
+      </table>
+      <script>
+
+      </script>
+  </body>
+</html>
