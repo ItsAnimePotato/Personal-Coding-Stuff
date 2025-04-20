@@ -40,6 +40,11 @@ function populateUI(profile) {
   document.getElementById("url").setAttribute("href", profile.href);
   document.getElementById("imgUrl").innerText = profile.images[0].url;
   document.getElementById("uri").innerText = profile.uri;
+
+  //date and time of creation
+  const now = new Date();
+  const currentDateTime = now.toLocaleString();
+  document.getElementById("dateTime").innerText = currentDateTime;
 }
 
 async function fetchQueue(code) {
@@ -61,16 +66,26 @@ function populateQueue(profile) {
 function populateTable(profile) {
   let table = document.getElementById("tableBody");
   for (let i = 0; i < profile.queue.length; i++) {
-    let song = profile.queue[i];
-    let songName = song.name;
-    let artistNames = song.artists.map((artist) => artist.name).join(", ");
-    let songOfSM = smSong(song);
+    var song = profile.queue[i];
+    var songName = song.name;
+    var type = song.type;
+    var person = "undefined";
+    var songOfSM = false;
+
+    if (type === "episode") {
+      person = song.show.publisher;
+    } else {
+      var artistNames = song.artists.map((artist) => artist.name).join(", ");
+      person = artistNames;
+      songOfSM = smSong(song);
+    }
 
     let row = `<tr>
       <td>${i + 1}</td>
       <td>${songName}</td>
-      <td>${artistNames}</td>
+      <td>${person}</td>
       <td>${songOfSM}</td>
+      <td>${type}</td>
     </tr>`;
     table.innerHTML += row;
   }

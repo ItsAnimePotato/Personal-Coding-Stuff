@@ -35,6 +35,8 @@ export async function getAccessToken(clientId, code) {
   });
 
   const { access_token } = await result.json();
+  localStorage.setItem("access_token", access_token);
+
   return access_token;
 }
 
@@ -57,4 +59,43 @@ async function generateCodeChallenge(codeVerifier) {
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=+$/, "");
+}
+
+export async function getRefreshToken(clientId) {
+  const refreshToken = localStorage.getItem("refresh_token");
+  if (!refreshToken) {
+    throw new Error("No refresh token found in localStorage.");
+  }
+
+  const params = new URLSearchParams();
+  params.append("grant_type", "refresh_token");
+  params.append("refresh_token", refreshToken);
+  params.append("client_id", clientId);
+
+  try {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params,
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("Error refreshing token:", error);
+      throw new Error(`Failed to refresh token: ${response.status}`);
+    }
+
+    const data = await response.json();
+    localStorage.setItem("access_token", data.access_token);
+    if (data.refresh_token) {
+      localStorage.setItem("refresh_token", data.refresh_token);
+    }
+
+    return data.access_token;
+  } catch (error) {
+    console.error("Token refresh error:", error);
+    throw error;
+  }
 }
