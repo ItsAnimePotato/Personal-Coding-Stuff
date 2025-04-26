@@ -84,6 +84,7 @@ function populateTable(profile) {
         var artistNames = song.artists.map((artist) => artist.name).join(", ");
         person = artistNames;
         songOfSM = smSong(song);
+        smRemover();
       }
     }
 
@@ -107,4 +108,9 @@ function smSong(song) {
 
 function areUrlsEqual(artistURL) {
   return urlList.some((url) => url === artistURL);
+}
+
+function smRemover() {
+  if (songOfSM === true) {
+  }
 }
