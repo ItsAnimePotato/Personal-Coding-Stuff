@@ -31,11 +31,12 @@
   }
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function execute() {
+    todayDate = currentDate();
     return gapi.client.youtubeAnalytics.reports
       .query({
         ids: "channel==MINE",
-        startDate: "2016-01-01",
-        endDate: "2017-12-31",
+        startDate: "2016-01-01", //before making of channel
+        endDate: todayDate,
         metrics:
           "views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage,subscribersGained",
         dimensions: "day",
@@ -52,8 +53,23 @@
       );
   }
   gapi.load("client:auth2", function () {
-    gapi.auth2.init({ client_id: "YOUR_CLIENT_ID" });
+    gapi.auth2.init({
+      client_id:
+        "255576875349-5nsm6pqknaued4osqqblvus8hfhvtac5.apps.googleusercontent.com",
+    });
   });
+
+  function currentDate() {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
 </script>
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
 <button onclick="execute()">execute</button>
