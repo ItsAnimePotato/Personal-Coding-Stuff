@@ -7,6 +7,10 @@ const clientId = "205f326a865e4840ac5230dc7937a368";
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
+//const accessToken = await getAccessToken(clientId, code);
+
+var isCurrentSongSM;
+
 if (!code) {
   redirectToAuthCodeFlow(clientId);
 } else {
@@ -14,8 +18,8 @@ if (!code) {
   const pProfile = await fetchProfile(accessToken);
   populateUI(pProfile);
   const qProfile = await fetchQueue(accessToken);
+  populateTable(qProfile, accessToken);
   populateQueue(qProfile);
-  populateTable(qProfile);
 }
 
 async function fetchProfile(code) {
@@ -61,9 +65,10 @@ function populateQueue(profile) {
     profile.currently_playing.name;
   document.getElementById("fullQueueLength").innerText = profile.queue.length;
   document.getElementById("nextSong").innerText = profile.queue[0].name;
+  document.getElementById("isCurrentSM").innerText = isCurrentSongSM;
 }
 
-function populateTable(profile) {
+function populateTable(profile, code) {
   let table = document.getElementById("tableBody");
   for (let i = 0; i < profile.queue.length; i++) {
     var song;
@@ -71,6 +76,7 @@ function populateTable(profile) {
     var type = "local";
     var person = "itsanimepotato";
     var songOfSM = false;
+    isCurrentSongSM = false;
 
     if (profile.queue[i].is_local === false) {
       song = profile.queue[i];
@@ -84,7 +90,7 @@ function populateTable(profile) {
         var artistNames = song.artists.map((artist) => artist.name).join(", ");
         person = artistNames;
         songOfSM = smSong(song);
-        smRemover();
+        isCurrentSongSM = smSong(profile.currently_playing);
       }
     }
 
@@ -97,6 +103,7 @@ function populateTable(profile) {
     </tr>`;
     table.innerHTML += row;
   }
+  smRemover(isCurrentSongSM, code);
 }
 
 function smSong(song) {
@@ -110,7 +117,18 @@ function areUrlsEqual(artistURL) {
   return urlList.some((url) => url === artistURL);
 }
 
-function smRemover() {
-  if (songOfSM === true) {
+async function smRemover(isCurrentSongSM, code) {
+  if (isCurrentSongSM === true) {
+    const result = await fetch("https://api.spotify.com/v1/me/player/next", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${code}` },
+    });
+
+    // Optional: check response
+    if (!result.ok) {
+      console.error("Failed to skip track:", result.statusText);
+    } else {
+      console.log("Track skipped");
+    }
   }
 }
