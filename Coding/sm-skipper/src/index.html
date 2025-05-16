@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SM Skipper</title>
+    <script src="src/script.js" type="module"></script>
+    <style>
+ 
+
+      .title {
+        text-align: center;
+        border-style: none none solid none;
+        padding-bottom: 5px;
+      }
+
+      .profile {
+        border-style: solid;
+        max-width: fit-content;
+        padding: 10px;
+        background-color: #ebebeb;
+        border-radius: 10px;
+      }
+
+      .queue {
+        text-align: left;
+      }
+
+      table, th, td {
+          border: 1px solid;
+          border-collapse: collapse;
+          min-width: 25%;
+          max-width: 50%;
+          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+          padding: 5px;
+        }
+        th {
+          background-color: aqua;
+        }
+      
+        .numSong {
+          max-width: 20px;
+        }
+        .smSong {
+          max-width: 50px;
+        }
+        .songType {
+          max-width: 70px;
+        }
+
+    </style>
+  </head>
+  <body>
+    <h1 class="title">Display your Spotify Profile Data and Queue</h1>
+
+    <section class="profile">
+      <h2>Logged in as <span id="displayName"></span></h2>
+      <span id="avatar"></span>
+      <ul>
+        <li>User ID: <span id="id"></span></li>
+        <li>Email: <span id="email"></span></li>
+        <li>Spotify URI: <a id="uri" href="#"></a></li>
+        <li>Link: <a id="url" href="#"></a></li>
+        <li>Profile Image: <span id="imgUrl"></span></li>
+        <li>Time Signed In: <span id="dateTime"></span></li>
+        </li>
+      </ul>
+    </section>
+
+    <section class="queue">
+      <h2>Song Queue</h2>
+      <p>These are the stats of the queue:</p>
+      <ul>
+        <li>Current Song: <span id="currentSong"></span></li>
+        <li>Queue Length: <span id="fullQueueLength"></span></li>
+        <li>Next Song: <span id="nextSong"></span></li>
+        <li>Next SM Song: <span id="nextSMSong"></span></li>
+      </ul>
+
+      <table class="table">
+        <tr class="bg-info">
+          <th class="numSong">#</th>
+          <th>Songs</th>
+          <th>Artists</th>
+          <th class="smType">SM?</th>
+          <th class="songType">Type?</th>
+        </tr>
+
+        <tbody id="tableBody"></tbody>
+      </table>
+    </section>
+  </body>
+</html>
