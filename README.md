@@ -1,4 +1,6 @@
-# Personal-Coding-Stuff
+# Personal-Stuff
+Previously called Personal-Coding-Stuff
+Changed name due to adding music
 
 Should have random code stuff or something idk
 
