@@ -32,9 +32,4 @@ export const urlList = [
   "https://open.spotify.com/artist/6nVMMEywS5Y4tsHPKx1nIo",
 
   //testing
-  /*
-  "https://open.spotify.com/artist/7daPb40K64rRtF36wd3ZOk",
-  "https://open.spotify.com/artist/4muJrGMndyYWqZtfk8OWy4",
-
-  */
 ];
